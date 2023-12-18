@@ -1,4 +1,6 @@
 local mp = require("mp") -- isn't actually required, mp still gonna be defined
+local env = require("utils.env")
+local api = require("utils.api")
 
 -- require utils.movie module
 local utils = require("utils.movie")
@@ -41,8 +43,6 @@ function mx:init()
 end
 
 function mx:get_subs_list()
-	-- TODO: get subs from opensubtitles.org, subscene.com, yifysubtitles.com, subdl.com, subh
-	-- Download the subs from the internet
 	-- The subs data
 	local subs = {
 		MOVIE_INFO.name,
@@ -127,5 +127,7 @@ mp.register_event("file-loaded", function()
 	MOVIE_INFO.type = type
 
 	Log("Movie name: " .. movie_name .. "\nYear: " .. year .. "\nQuality: " .. quality .. "\nType: " .. type)
+	Log(env.get_api_key(), 3)
+	api.search_subtitles()
 	mx:init()
 end)
